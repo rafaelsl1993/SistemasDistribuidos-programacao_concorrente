@@ -1,9 +1,9 @@
 
-package ProgramaçãoConcorrente.Interfaces;
+package ProgConcorrente.Interfaces;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface InterfaceSecador extends Remote {
-    public void recebeSecagem(float produto) throws RemoteException;
+    public void recebeSecagem(double produto) throws RemoteException;
 }

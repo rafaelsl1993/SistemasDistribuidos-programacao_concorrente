@@ -1,15 +1,15 @@
 
-package ProgramaçãoConcorrente.Processos;
+package ProgConcorrente.Processos;
 
-import ProgramaçãoConcorrente.Interfaces.InterfaceTanqueGlicerina;
-import ProgramaçãoConcorrente.Utils.Constantes;
+import ProgConcorrente.Interfaces.InterfaceTanqueGlicerina;
+import ProgConcorrente.Utils.Constantes;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 public class TanqueGlicerina extends UnicastRemoteObject implements InterfaceTanqueGlicerina{
-    private int glicerina;
+    private double glicerina;
     
     public TanqueGlicerina() throws RemoteException{
         /*super(Constantes.getInstance().TANQUEGLICERINA, 
@@ -28,13 +28,13 @@ public class TanqueGlicerina extends UnicastRemoteObject implements InterfaceTan
         }catch(Exception e){
             e.printStackTrace();
         }
-        System.out.println("Rodando: TanqueGLicerina");
+        System.out.println("TanqueGlicerina: Servidor rodando...");
     }
 
     @Override
-    public void recebeGlicerina(int glicerina) {
+    public void recebeGlicerina(double glicerina) {
         this.glicerina += glicerina;
-        System.out.println("TanqueGlicerina recebe: " + glicerina);
+        System.out.println("TanqueGlicerina recebe = " + glicerina);
     }
 
 }

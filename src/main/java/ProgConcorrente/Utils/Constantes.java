@@ -1,5 +1,5 @@
 
-package ProgramaçãoConcorrente.Utils;
+package ProgConcorrente.Utils;
 
 
 public class Constantes {
@@ -22,8 +22,13 @@ public class Constantes {
     public static final String DECANTADOR = "Decantador";
     
     public static final String PORTALAVAGEM = "1008";
-    public static final String LAVAGEM = "Lavagem";
+    public static final String PORTALAVAGEMDOIS = "1016";
+    public static final String PORTALAVAGEMTRES = "1018";
+    public static final String LAVAGEMUM = "LavagemUm";
+    public static final String LAVAGEMDOIS = "LavagemDois";
+    public static final String LAVAGEMTRES = "LavagemTres";
     
+    public static final String PORTASECADORETOH = "1020";
     public static final String PORTASECADOR = "1010";
     public static final String SECADORETOH = "SecadorEtoh";
     public static final String SECADOR = "Secador";
@@ -34,9 +39,8 @@ public class Constantes {
     public static final String PORTABIODIESEL = "1014";
     public static final String BIODIESEL = "Biodiesel";
     
-    
-    
-    public final int LIMITEDECANTADOR = 500;
+    public static final float LIMITEDECANTADOR = 500;
+
     
     private Constantes(){
 

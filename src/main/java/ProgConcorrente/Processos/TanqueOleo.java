@@ -1,15 +1,15 @@
 
-package ProgramaçãoConcorrente.Processos;
+package ProgConcorrente.Processos;
 
-import ProgramaçãoConcorrente.Interfaces.InterfaceTanqueOleo;
-import ProgramaçãoConcorrente.Utils.Constantes;
+import ProgConcorrente.Interfaces.InterfaceTanqueOleo;
+import ProgConcorrente.Utils.Constantes;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 public class TanqueOleo extends UnicastRemoteObject implements InterfaceTanqueOleo{
-    private int oleo;
+    private double oleo;
     
     public TanqueOleo() throws RemoteException{
     }
@@ -25,24 +25,24 @@ public class TanqueOleo extends UnicastRemoteObject implements InterfaceTanqueOl
         }catch(Exception e){
             e.printStackTrace();
         }
-        System.out.println("Rodando: TanqueOleo");
+        System.out.println("TanqueOleo: Servidor rodando...");
     }
     
     @Override
-    public void recebeOleo(int oleo) throws RemoteException{
+    public void recebeOleo(double oleo) throws RemoteException{
         this.oleo += oleo;
-        System.out.println("TanqueOleo recebe: " + oleo);
+        System.out.println("TanqueOleo: recebe = " + oleo);
     }
 
     @Override
-    public int enviaOleo(int oleo) throws RemoteException{
+    public double enviaOleo(double oleo) throws RemoteException{
             if(this.oleo > oleo){
                 this.oleo -= oleo;
             }else{
                 oleo = this.oleo;
                 this.oleo = 0;
             }
-            System.out.println("TanqueOleo envia: " + oleo);
+            System.out.println("TanqueOleo: envia = " + oleo);
             return oleo;
     }
 

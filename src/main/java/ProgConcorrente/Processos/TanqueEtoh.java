@@ -1,9 +1,9 @@
 
-package ProgramaçãoConcorrente.Processos;
+package ProgConcorrente.Processos;
 
-import ProgramaçãoConcorrente.Interfaces.InterfaceTanqueEtoh;
-import ProgramaçãoConcorrente.Interfaces.InterfaceTanqueQuimico;
-import ProgramaçãoConcorrente.Utils.Constantes;
+import ProgConcorrente.Interfaces.InterfaceTanqueEtoh;
+import ProgConcorrente.Interfaces.InterfaceTanqueQuimico;
+import ProgConcorrente.Utils.Constantes;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -11,11 +11,14 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class TanqueEtoh extends UnicastRemoteObject implements InterfaceTanqueEtoh{
-    private float etoh;
+    private static double etoh;
     private Constantes constantes = null;
     private InterfaceTanqueQuimico remotoTanqueQuimico = null;
 
@@ -28,7 +31,7 @@ public class TanqueEtoh extends UnicastRemoteObject implements InterfaceTanqueEt
     }
     
     public void rodarServer(){
-        etoh = 0;
+        TanqueEtoh.etoh = 0;
         constantes = Constantes.getInstance();
         try{
             TanqueEtoh tanque = new TanqueEtoh();
@@ -37,7 +40,7 @@ public class TanqueEtoh extends UnicastRemoteObject implements InterfaceTanqueEt
         }catch(Exception e){
             e.printStackTrace();
         }
-        System.out.println("Rodando: TanqueEtoh");
+        System.out.println("TanqueEtoh: Servidor rodando...");
     }
 
     public void rodarClient() throws NotBoundException, MalformedURLException, RemoteException{
@@ -46,17 +49,32 @@ public class TanqueEtoh extends UnicastRemoteObject implements InterfaceTanqueEt
         
         remotoTanqueQuimico = (InterfaceTanqueQuimico) Naming.lookup(url);
 
-        System.out.println("TanqueEtoh Conectado...");
+
+        System.out.println("TanqueEtoh: Conectado ao TanqueQuimico...");
     }
+    
+    public Runnable rodarThread = new Runnable(){
+        public void run(){
+            Instant inicio;
+            while(true){
+                inicio = Instant.now();
+                while(Duration.between(inicio,Instant.now()).toMillis() < 2000){
+                    //Esperando 2 segundos até a próxima entrega de etoh;
+                }
+                try {
+                    remotoTanqueQuimico.recebeEtoh(TanqueEtoh.etoh);
+                    System.out.println("TanqueEtoh: Enviando EtOH...");
+                    TanqueEtoh.etoh = 0;
+                } catch (RemoteException ex) {
+                    Logger.getLogger(TanqueEtoh.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    };
 
     @Override
-    public void recebeEtoh(float etoh) {
-        try {
-            //this.etoh += etoh;
-            remotoTanqueQuimico.recebeEtoh(etoh);
-        } catch (RemoteException ex) {
-            Logger.getLogger(TanqueEtoh.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void recebeEtoh(double etoh) {
+        TanqueEtoh.etoh += etoh;
     }
     
 }
